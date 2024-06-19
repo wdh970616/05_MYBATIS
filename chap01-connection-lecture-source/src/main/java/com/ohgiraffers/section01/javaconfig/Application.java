@@ -8,9 +8,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
-import java.sql.Date;
-
-
 public class Application {
 
     /*
@@ -44,7 +41,7 @@ public class Application {
          * ------------------------------------
          * PooledDataSource : ConnectionPool 사용
          * UnPooledDataSource : ConnectionPool 미사용
-         * */
+         */
 
         // 순서 1. Enviroment : DB 접속에 관한 환경
         Environment environment = new Environment(
@@ -70,7 +67,7 @@ public class Application {
          *
          * build() :
          * 설정에 대한 정보를 담고있는 Configuration 타입 객체를 받아 SqlSessionFactory 객체를 반환하는 메소드
-         * */
+         */
 
         // 순서 3. sqlSessionFactory 구현
         SqlSessionFactory sqlSessionFactory =
@@ -84,7 +81,7 @@ public class Application {
          *           Auto commit에 대한 옵션을 false로 지정 (권장되는방식)
          * - true  : Connection 인터페이스 타입 객체로 DML 수행 후
          *           Auto commit에 대한 옵션을 true로 지정
-         * */
+         */
 
 
         SqlSession sqlSession = sqlSessionFactory.openSession(false);
