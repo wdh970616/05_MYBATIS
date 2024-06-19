@@ -1,6 +1,8 @@
 package com.ohgiraffers.section01.xmlconfig;
 
 import java.sql.SQLOutput;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Application {
@@ -26,9 +28,13 @@ public class Application {
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
+                    System.out.println();
                     menuController.selectAllmenu();
+                    System.out.println();
                     break;
                 case 2:
+                    menuController.selectMenuByCode(inputMenuCode());
+                    System.out.println();
                     break;
                 case 3:
                     break;
@@ -41,5 +47,17 @@ public class Application {
                     break;
             }
         } while (true);
+    }
+
+    // 메뉴코드를 입력받는 메소드
+    private static Map<String, String> inputMenuCode() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("메뉴코드를 입력하세요 : ");
+        String code = sc.nextLine();
+
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("code", code);
+
+        return parameter;
     }
 }
