@@ -31,6 +31,9 @@ public class Template {
                 throw new RuntimeException(e);
             }
         }
-        return sqlSessionFactory.openSession(false);
+        SqlSession sqlSession = sqlSessionFactory.openSession(false);
+        System.out.println("sqlSessionFactory의 hashcode() : " + sqlSessionFactory.hashCode());
+        System.out.println("sqlSession의 hashcode() : " + sqlSession.hashCode());
+        return sqlSession;
     }
 }
