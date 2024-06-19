@@ -24,7 +24,7 @@ public class Application {
      * -> 직접 SQL 구문을 작성하기때문에 복잡한 쿼리 작성할때 용이하다.
      * -> 태그들을 통해 넓은 방법으로 쓸 수 있음
      * -> SQL문과 자바 코드가 분리되어있음
-     * */
+     */
 
     private static String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static String URL = "jdbc:mysql://localhost:3306/menudb";
