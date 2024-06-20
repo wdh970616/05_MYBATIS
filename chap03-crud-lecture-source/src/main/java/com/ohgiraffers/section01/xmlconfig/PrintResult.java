@@ -50,6 +50,5 @@ public class PrintResult {
                 break;
         }
         System.out.println(successMessage);
-        ;
     }
 }

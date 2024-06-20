@@ -37,8 +37,8 @@
         where menu_code = #{ code }
     </select>
 
-<!-- insert, update, delete는 resultType을 작성하지 않으며 기본 _int 수행 결과를 반환한다 -->
-<!-- 파라미터로 전달된 DTO의 필드명으로 값을 바인딩 해야하며 getter를 이용하므로 getter가 없으면 에러가 발생한다-->
+    <!-- insert, update, delete는 resultType을 작성하지 않으며 기본 _int 수행 결과를 반환한다 -->
+    <!-- 파라미터로 전달된 DTO의 필드명으로 값을 바인딩 해야하며 getter를 이용하므로 getter가 없으면 에러가 발생한다-->
     <insert id="insertMenu" parameterType="com.ohgiraffers.section01.xmlconfig.MenuDTO">
         insert into tbl_menu (
         menu_name,
@@ -52,4 +52,18 @@
         'Y'
         )
     </insert>
+
+    <update id="updateMenu" parameterType="com.ohgiraffers.section01.xmlconfig.MenuDTO">
+        update tbl_menu
+        set menu_name = #{ name },
+        menu_price = #{ price },
+        category_code = #{ categoryCode }
+        where menu_code = #{ code }
+    </update>
+
+    <delete id="deleteMenu" parameterType="_int">
+        delete
+        from tbl_menu
+        where menu_code = #{ code }
+    </delete>
 </mapper>
