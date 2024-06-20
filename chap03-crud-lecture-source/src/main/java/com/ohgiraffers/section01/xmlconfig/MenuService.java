@@ -46,4 +46,18 @@ public class MenuService {
         sqlSession.close();
         return menu;
     }
+
+    public boolean registMenu(MenuDTO menu) {
+        SqlSession sqlSession = getSqlSession();
+        int result = menuDAO.insertMenu(sqlSession, menu);
+
+        // result 결과값에 따라서 insert, update, delete는 트랜젝션 처리를 해줘야함.
+        if (result > 0) {
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+        sqlSession.close();
+        return result > 0 ? true : false;
+    }
 }

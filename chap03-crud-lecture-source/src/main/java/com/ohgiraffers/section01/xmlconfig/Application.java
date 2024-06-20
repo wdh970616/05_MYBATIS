@@ -1,6 +1,5 @@
 package com.ohgiraffers.section01.xmlconfig;
 
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -37,6 +36,8 @@ public class Application {
                     System.out.println();
                     break;
                 case 3:
+                    menuController.registMenu(inputMenu());
+                    System.out.println();
                     break;
                 case 4:
                     break;
@@ -57,6 +58,24 @@ public class Application {
 
         Map<String, String> parameter = new HashMap<>();
         parameter.put("code", code);
+
+        return parameter;
+    }
+
+    // 메뉴를 입력하는 메소드
+    private static Map<String, String> inputMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("메뉴 이름을 입력하세요 : ");
+        String name = sc.nextLine();
+        System.out.print("메뉴 가격을 입력하세요 : ");
+        String price = sc.nextLine();
+        System.out.print("카테고리 코드를 입력하세요 : ");
+        String categoryCode = sc.nextLine();
+
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("name", name);
+        parameter.put("price", price);
+        parameter.put("categoryCode", categoryCode);
 
         return parameter;
     }
