@@ -18,7 +18,7 @@ public class Application {
         Scanner sc = new Scanner(System.in);
         MenuController menuController = new MenuController();
         do {
-            System.out.println("========== 오지라퍼 메뉴 관리 시스템 ==========");
+            System.out.println("=== 오지라퍼 메뉴 관리 시스템 ===");
             System.out.println("1. 메뉴 전체 조회하기");
             System.out.println("2. 메뉴 선택 조회하기");
             System.out.println("3. 메뉴 등록하기");
@@ -49,11 +49,9 @@ public class Application {
                     System.out.println();
                     break;
                 default:
-                    System.out.println();
-                    System.out.println("========================");
+                    System.out.println("\n========================");
                     System.out.println("잘못된 번호를 입력하셨습니다.");
-                    System.out.println("========================");
-                    System.out.println();
+                    System.out.println("========================\n");
                     break;
             }
         } while (true);
