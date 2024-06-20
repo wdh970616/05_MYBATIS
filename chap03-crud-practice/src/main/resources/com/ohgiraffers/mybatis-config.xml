@@ -15,6 +15,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="com/ohgiraffers/practice/Mapper.xml"/>
+        <mapper resource="com/ohgiraffers/dao/EmpMapper.xml"/>
     </mappers>
 </configuration>

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ohgiraffers.practice.Mapper">
-    <resultMap id="empResultMap" type="com.ohgiraffers.practice.EmployeeDTO">
+<mapper namespace="com.ohgiraffers.dao.EmpMapper">
+    <resultMap id="empResultMap" type="com.ohgiraffers.dto.EmployeeDTO">
         <id property="id" column="emp_id"/>
         <result property="name" column="emp_name"/>
         <result property="no" column="emp_no"/>
@@ -38,7 +38,7 @@
         where emp_name = #{name}
     </select>
 
-    <insert id="insertEmp" parameterType="com.ohgiraffers.practice.EmployeeDTO">
+    <insert id="insertEmp" parameterType="com.ohgiraffers.dto.EmployeeDTO">
         insert into employee(
         emp_id,
         emp_name,
@@ -66,7 +66,7 @@
         'N')
     </insert>
 
-    <update id="updateEmp" parameterType="com.ohgiraffers.practice.EmployeeDTO">
+    <update id="updateEmp" parameterType="com.ohgiraffers.dto.EmployeeDTO">
         update employee
         set emp_name = #{name},
         emp_no = #{no},
@@ -80,17 +80,23 @@
         where emp_id = #{id}
     </update>
 
-    <update id="retireEmp" parameterType="com.ohgiraffers.practice.EmployeeDTO">
+    <update id="retireEmp" parameterType="com.ohgiraffers.dto.EmployeeDTO">
         update employee
         set ent_date = #{entDate},
         ent_yn = 'Y'
         where emp_id = #{id}
     </update>
 
-    <delete id="deleteEmp" parameterType="_int">
+    <delete id="deleteEmp">
         delete
         from employee
         where emp_id = #{id}
     </delete>
+
+    <update id="setBonus" parameterType="com.ohgiraffers.dto.EmployeeDTO">
+        update employee
+        set bonus = #{bonus}
+        where emp_id = #{id}
+    </update>
 
 </mapper>

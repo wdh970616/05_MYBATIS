@@ -1,5 +1,6 @@
-package com.ohgiraffers.practice;
+package com.ohgiraffers.common;
 
+import com.ohgiraffers.dao.EmpMapper;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -23,7 +24,7 @@ public class Template {
                     new JdbcTransactionFactory(),
                     new PooledDataSource(DRIVER, URL, USER, PASSWORD));
             Configuration configuration = new Configuration(environment);
-            configuration.addMapper(Mapper.class);
+            configuration.addMapper(EmpMapper.class);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
         }
         return sqlSessionFactory.openSession(false);

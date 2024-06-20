@@ -1,52 +1,56 @@
-package com.ohgiraffers.practice;
+package com.ohgiraffers.controller;
+
+import com.ohgiraffers.dto.EmployeeDTO;
+import com.ohgiraffers.view.EmpPrintResult;
+import com.ohgiraffers.service.EmpService;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-public class Controller {
+public class EmpController {
 
-    private final PrintResult printResult;
-    private final Service service;
+    private final EmpPrintResult empPrintResult;
+    private final EmpService empService;
 
-    public Controller() {
-        printResult = new PrintResult();
-        service = new Service();
+    public EmpController() {
+        empPrintResult = new EmpPrintResult();
+        empService = new EmpService();
     }
 
     public void sellectAllEmp() {
-        List<EmployeeDTO> empList = service.selectAllEmp();
+        List<EmployeeDTO> empList = empService.selectAllEmp();
         if (empList != null) {
             System.out.println();
-            printResult.printEmpList(empList);
+            empPrintResult.printEmpList(empList);
             System.out.println();
         } else {
-            printResult.printErrorMessage("selectList");
+            empPrintResult.printErrorMessage("selectList");
         }
     }
 
     public void sellectEmpByID(Map<String, String> parameter) {
         String id = parameter.get("id");
-        EmployeeDTO emp = service.selectEmpById(id);
+        EmployeeDTO emp = empService.selectEmpById(id);
         if (emp != null) {
             System.out.println();
-            printResult.printEmp(emp);
+            empPrintResult.printEmp(emp);
             System.out.println();
         } else {
-            printResult.printErrorMessage("selectOne");
+            empPrintResult.printErrorMessage("selectOne");
         }
     }
 
     public void sellectEmpByName(Map<String, String> parameter) {
         String name = parameter.get("name");
-        EmployeeDTO emp = service.selectEmpByName(name);
+        EmployeeDTO emp = empService.selectEmpByName(name);
         if (emp != null) {
             System.out.println();
-            printResult.printEmp(emp);
+            empPrintResult.printEmp(emp);
             System.out.println();
         } else {
-            printResult.printErrorMessage("selectOne");
+            empPrintResult.printErrorMessage("selectOne");
         }
     }
 
@@ -80,10 +84,10 @@ public class Controller {
         emp.setManagerId(managerId);
         emp.setHireDate(hireDate);
 
-        if (service.insertEmp(emp)) {
-            printResult.printSuccessMessage("insert");
+        if (empService.insertEmp(emp)) {
+            empPrintResult.printSuccessMessage("insert");
         } else {
-            printResult.printErrorMessage("insert");
+            empPrintResult.printErrorMessage("insert");
         }
     }
 
@@ -111,10 +115,10 @@ public class Controller {
         emp.setSalary(salary);
         emp.setManagerId(managerId);
 
-        if (service.updateEmp(emp)) {
-            printResult.printSuccessMessage("update");
+        if (empService.updateEmp(emp)) {
+            empPrintResult.printSuccessMessage("update");
         } else {
-            printResult.printErrorMessage("update");
+            empPrintResult.printErrorMessage("update");
         }
     }
 
@@ -130,20 +134,35 @@ public class Controller {
         emp.setId(id);
         emp.setEntDate(entDate);
 
-        if (service.retireEmp(emp)) {
-            printResult.printSuccessMessage("retire");
+        if (empService.retireEmp(emp)) {
+            empPrintResult.printSuccessMessage("retire");
         } else {
-            printResult.printErrorMessage("retire");
+            empPrintResult.printErrorMessage("retire");
         }
     }
 
     public void deleteEmp(Map<String, String> parameter) {
         String id = parameter.get("id");
 
-        if (service.deleteEmp(id)) {
-            printResult.printSuccessMessage("delete");
+        if (empService.deleteEmp(id)) {
+            empPrintResult.printSuccessMessage("delete");
         } else {
-            printResult.printErrorMessage("delete");
+            empPrintResult.printErrorMessage("delete");
+        }
+    }
+
+    public void setBonus(Map<String, String> parameter) {
+        String id = parameter.get("id");
+        double bonus = Double.parseDouble(parameter.get("bonus"));
+
+        EmployeeDTO emp = new EmployeeDTO();
+        emp.setId(id);
+        emp.setBonus(bonus);
+
+        if (empService.setBonus(emp)) {
+            empPrintResult.printSuccessMessage("bonus");
+        } else {
+            empPrintResult.printErrorMessage("bonus");
         }
     }
 }

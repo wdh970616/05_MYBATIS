@@ -1,4 +1,6 @@
-package com.ohgiraffers.practice;
+package com.ohgiraffers.run;
+
+import com.ohgiraffers.controller.EmpController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +9,7 @@ import java.util.Scanner;
 public class Application {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Controller controller = new Controller();
+        EmpController empController = new EmpController();
         do {
             System.out.println("=== 오지라퍼 사원 관리 시스템 ===");
             System.out.println("1. 사원 전체 조회하기");
@@ -17,29 +19,33 @@ public class Application {
             System.out.println("5. 사원 정보 수정하기");
             System.out.println("6. 퇴사처리 하기");
             System.out.println("7. 사원 정보 삭제하기");
+            System.out.println("8. 보너스율 설정하기");
             System.out.print("사용하실 기능 번호를 입력하세요 : ");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
-                    controller.sellectAllEmp();
+                    empController.sellectAllEmp();
                     break;
                 case 2:
-                    controller.sellectEmpByID(inputEmpId());
+                    empController.sellectEmpByID(inputEmpId());
                     break;
                 case 3:
-                    controller.sellectEmpByName(inputEmpName());
+                    empController.sellectEmpByName(inputEmpName());
                     break;
                 case 4:
-                    controller.insertEmp(inputEmp());
+                    empController.insertEmp(inputEmp());
                     break;
                 case 5:
-                    controller.updateEmp(inputUpdateEmp());
+                    empController.updateEmp(inputUpdateEmp());
                     break;
                 case 6:
-                    controller.retireEmp(inputRetireEmp());
+                    empController.retireEmp(inputRetireEmp());
                     break;
                 case 7:
-                    controller.deleteEmp(inputEmpId());
+                    empController.deleteEmp(inputEmpId());
+                    break;
+                case 8:
+                    empController.setBonus(inputSetBonus());
                     break;
                 default:
                     System.out.println("\n========================");
@@ -186,6 +192,20 @@ public class Application {
         parameter.put("year", year);
         parameter.put("month", month);
         parameter.put("day", day);
+
+        return parameter;
+    }
+
+    private static Map<String, String> inputSetBonus() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("설정할 사원의 ID를 입력해주세요 : ");
+        String id = sc.nextLine();
+        System.out.print("설정할 보너스율을 입력해주세요 : ");
+        String bonus = sc.nextLine();
+
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("id", id);
+        parameter.put("bonus", bonus);
 
         return parameter;
     }
