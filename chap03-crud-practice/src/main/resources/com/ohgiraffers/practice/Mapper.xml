@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.practice.Mapper">
+    <resultMap id="empResultMap" type="com.ohgiraffers.practice.EmployeeDTO">
+        <id property="id" column="emp_id"/>
+        <result property="name" column="emp_name"/>
+        <result property="no" column="emp_no"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="deptCode" column="dept_code"/>
+        <result property="jobCode" column="job_code"/>
+        <result property="salLevel" column="sal_level"/>
+        <result property="salary" column="salary"/>
+        <result property="bonus" column="bonus"/>
+        <result property="managerId" column="manager_id"/>
+        <result property="hireDate" column="hire_date"/>
+        <result property="entDate" column="ent_date"/>
+        <result property="entYn" column="ent_yn"/>
+    </resultMap>
+
+    <select id="selectAllEmp" resultMap="empResultMap">
+        select *
+        from employee
+        order by emp_id
+    </select>
+
+    <select id="selectEmpById" resultMap="empResultMap">
+        select *
+        from employee
+        where emp_id = #{id}
+    </select>
+
+    <select id="selectEmpByName" resultMap="empResultMap">
+        select *
+        from employee
+        where emp_name = #{name}
+    </select>
+
+    <insert id="insertEmp" parameterType="com.ohgiraffers.practice.EmployeeDTO">
+        insert into employee(
+        emp_id,
+        emp_name,
+        emp_no,
+        email,
+        phone,
+        dept_code,
+        job_code,
+        sal_level,
+        salary,
+        manager_id,
+        hire_date,
+        ent_yn) values (
+        #{id},
+        #{name},
+        #{no},
+        #{email},
+        #{phone},
+        #{deptCode},
+        #{jobCode},
+        #{salLevel},
+        #{salary},
+        #{managerId},
+        #{hireDate},
+        'N')
+    </insert>
+
+    <update id="updateEmp" parameterType="com.ohgiraffers.practice.EmployeeDTO">
+        update employee
+        set emp_name = #{name},
+        emp_no = #{no},
+        email = #{email},
+        phone = #{phone},
+        dept_code = #{deptCode},
+        job_code = #{jobCode},
+        sal_level = #{salLevel},
+        salary = #{salary},
+        manager_id = #{managerId}
+        where emp_id = #{id}
+    </update>
+
+    <update id="retireEmp" parameterType="com.ohgiraffers.practice.EmployeeDTO">
+        update employee
+        set ent_date = #{entDate},
+        ent_yn = 'Y'
+        where emp_id = #{id}
+    </update>
+
+    <delete id="deleteEmp" parameterType="_int">
+        delete
+        from employee
+        where emp_id = #{id}
+    </delete>
+
+</mapper>
