@@ -125,7 +125,7 @@ public class Application {
     private static List<Integer> createRandomMenuCodeList() {
         Set<Integer> set = new HashSet<>();
         while (set.size() < 5) {
-            int temp = (int)((Math.random() * 21) + 1);
+            int temp = (int) ((Math.random() * 21) + 1);
             set.add(temp);
         }
         List<Integer> list = new ArrayList<>(set);
@@ -150,8 +150,10 @@ public class Application {
                     menuService.searchMenuByCodeOrSearchAll(inputAllOrOne());
                     break;
                 case 2:
+                    menuService.searchMenuByNameOrCategory(inputSearchCriteriaMap());
                     break;
                 case 3:
+                    menuService.modifyMenu(inputChangeInfo());
                     break;
                 case 9:
                     return;
@@ -172,5 +174,52 @@ public class Application {
             searchCriteria.setValue(code);
         }
         return searchCriteria;
+    }
+
+    private static Map<String, Object> inputSearchCriteriaMap() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("검색할 조건을 입력하세요 (category/name/both/null) : ");
+        String condition = sc.nextLine();
+        Map<String, Object> criteria = new HashMap<>();
+
+        if ("category".equals(condition)) {
+            System.out.print("검색할 카테고리 코드를 입력하세요 : ");
+            int categoryValue = sc.nextInt();
+            criteria.put("categoryValue", categoryValue);
+        } else if ("name".equals(condition)) {
+            System.out.print("검색할 메뉴명을 입력하세요 : ");
+            String nameValue = sc.nextLine();
+            criteria.put("nameValue", nameValue);
+        } else if ("both".equals(condition)) {
+            System.out.print("검색할 메뉴명을 입력하세요 : ");
+            String nameValue = sc.nextLine();
+            System.out.print("검색할 카테고리 코드를 입력하세요 : ");
+            int categoryValue = sc.nextInt();
+            criteria.put("nameValue", nameValue);
+            criteria.put("categoryValue", categoryValue);
+        }
+        return criteria;
+    }
+
+    private static Map<String, Object> inputChangeInfo() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("변경할 메뉴 코드를 입력하세요 : ");
+        int code = sc.nextInt();
+        System.out.print("변경할 메뉴이름을 입력하세요 : ");
+        sc.nextLine();
+        String name = sc.nextLine();
+        System.out.print("변경할 카테고리 코드를 입력하세요 : ");
+        int categoryCode = sc.nextInt();
+        System.out.print("판매 여부를 결정해주세요 (Y/N) : ");
+        sc.nextLine();
+        String orderableStatus = sc.nextLine();
+
+        Map<String, Object> criteria = new HashMap<>();
+        criteria.put("code", code);
+        criteria.put("name", name);
+        criteria.put("categoryCode", categoryCode);
+        criteria.put("orderableStatus", orderableStatus);
+
+        return criteria;
     }
 }
