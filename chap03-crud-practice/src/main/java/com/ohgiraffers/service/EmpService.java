@@ -20,6 +20,14 @@ public class EmpService {
         return empList;
     }
 
+    public List<EmployeeDTO> selectEmpByDeptCode(String deptCode) {
+        SqlSession sqlSession = getSqlSession();
+        empMapper = sqlSession.getMapper(EmpMapper.class);
+        List<EmployeeDTO> empList = empMapper.selectEmpByDeptCode(deptCode);
+        sqlSession.close();
+        return empList;
+    }
+
     public EmployeeDTO selectEmpById(String id) {
         SqlSession sqlSession = getSqlSession();
         empMapper = sqlSession.getMapper(EmpMapper.class);

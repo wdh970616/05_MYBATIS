@@ -7,6 +7,7 @@ import java.util.List;
 public interface EmpMapper {
 
     List<EmployeeDTO> selectAllEmp();
+    List<EmployeeDTO> selectEmpByDeptCode(String deptCode);
     EmployeeDTO selectEmpById(String id);
     EmployeeDTO selectEmpByName(String name);
     int insertEmp(EmployeeDTO emp);

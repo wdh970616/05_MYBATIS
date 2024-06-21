@@ -26,6 +26,13 @@
         order by emp_id
     </select>
 
+    <select id="selectEmpByDeptCode" resultMap="empResultMap">
+        select *
+        from employee
+        where dept_code = #{deptCode}
+        order by emp_id
+    </select>
+
     <select id="selectEmpById" resultMap="empResultMap">
         select *
         from employee

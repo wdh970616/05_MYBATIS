@@ -2,24 +2,30 @@ package com.ohgiraffers.run;
 
 import com.ohgiraffers.controller.EmpController;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         EmpController empController = new EmpController();
         do {
             System.out.println("=== 오지라퍼 사원 관리 시스템 ===");
             System.out.println("1. 사원 전체 조회하기");
-            System.out.println("2. 사원 ID로 조회하기");
-            System.out.println("3. 사원명으로 조회하기");
-            System.out.println("4. 신규 사원 등록하기");
-            System.out.println("5. 사원 정보 수정하기");
-            System.out.println("6. 퇴사처리 하기");
-            System.out.println("7. 사원 정보 삭제하기");
-            System.out.println("8. 보너스율 설정하기");
+            System.out.println("2. 부서별 사원 조회하기");
+            System.out.println("3. 사원 ID로 조회하기");
+            System.out.println("4. 사원명으로 조회하기");
+            System.out.println("5. 신규 사원 등록하기");
+            System.out.println("6. 사원 정보 수정하기");
+            System.out.println("7. 보너스율 설정하기");
+            System.out.println("8. 퇴사처리 하기");
+            System.out.println("9. 사원 정보 삭제하기");
             System.out.print("사용하실 기능 번호를 입력하세요 : ");
             int choice = sc.nextInt();
             switch (choice) {
@@ -27,25 +33,28 @@ public class Application {
                     empController.sellectAllEmp();
                     break;
                 case 2:
-                    empController.sellectEmpByID(inputEmpId());
+                    empController.sellectEmpByDeptCode(inputDeptCode());
                     break;
                 case 3:
-                    empController.sellectEmpByName(inputEmpName());
+                    empController.sellectEmpByID(inputEmpId());
                     break;
                 case 4:
-                    empController.insertEmp(inputEmp());
+                    empController.sellectEmpByName(inputEmpName());
                     break;
                 case 5:
-                    empController.updateEmp(inputUpdateEmp());
+                    empController.insertEmp(inputEmp());
                     break;
                 case 6:
-                    empController.retireEmp(inputRetireEmp());
+                    empController.updateEmp(inputUpdateEmp());
                     break;
                 case 7:
-                    empController.deleteEmp(inputEmpId());
+                    empController.setBonus(inputSetBonus());
                     break;
                 case 8:
-                    empController.setBonus(inputSetBonus());
+                    empController.retireEmp(inputRetireEmp());
+                    break;
+                case 9:
+                    empController.deleteEmp(inputEmpId());
                     break;
                 default:
                     System.out.println("\n========================");
@@ -54,6 +63,18 @@ public class Application {
                     break;
             }
         } while (true);
+    }
+
+    private static Map<String, String> inputDeptCode() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("조회하실 부서의 코드를 입력해주세요 : D");
+        String deptNo = sc.nextLine();
+        String deptCode = 'D' + deptNo;
+
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("deptCode", deptCode);
+
+        return parameter;
     }
 
     private static Map<String, String> inputEmpId() {
@@ -176,25 +197,51 @@ public class Application {
         return parameter;
     }
 
-    private static Map<String, String> inputRetireEmp() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("퇴사처리 할 사원의 ID를 입력해주세요 : ");
-        String id = sc.nextLine();
-        System.out.print("퇴사처리 할 사원의 퇴사연도를 입력해주세요 : ");
-        String year = sc.nextLine();
-        System.out.print("퇴사처리 할 사원의 퇴사월을 입력해주세요 : ");
-        String month = sc.nextLine();
-        System.out.print("퇴사처리 할 사원의 입사 퇴사일을 입력해주세요 : ");
-        String day = sc.nextLine();
-
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("id", id);
-        parameter.put("year", year);
-        parameter.put("month", month);
-        parameter.put("day", day);
-
-        return parameter;
-    }
+//    private static Map<String, String> inputRetireEmp() {
+//        Scanner sc = new Scanner(System.in);
+//        System.out.print("퇴사처리 할 사원의 ID를 입력해주세요 : ");
+//        String id = sc.nextLine();
+//        System.out.print("당일 퇴사처리 하시겠습니까? (Y/N) : ");
+//        String isItToday = sc.nextLine();
+//        do {
+//            if (isItToday.equals("Y")) {
+//                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//                String strDate = format.format(Date.from(Instant.now()));
+//                String sarr[] = strDate.split("-");
+//                String year = sarr[0];
+//                String month = sarr[1];
+//                String day = sarr[2];
+//
+//                Map<String, String> parameter = new HashMap<>();
+//                parameter.put("id", id);
+//                parameter.put("year", year);
+//                parameter.put("month", month);
+//                parameter.put("day", day);
+//                return parameter;
+//
+//            } else if (isItToday.equals("N")) {
+//                System.out.println("퇴사날짜 직접 입력을 선택하셨습니다.");
+//                System.out.print("퇴사처리 할 사원의 퇴사연도를 입력해주세요 : ");
+//                String year = sc.nextLine();
+//                System.out.print("퇴사처리 할 사원의 퇴사월을 입력해주세요 : ");
+//                String month = sc.nextLine();
+//                System.out.print("퇴사처리 할 사원의 입사 퇴사일을 입력해주세요 : ");
+//                String day = sc.nextLine();
+//
+//                Map<String, String> parameter = new HashMap<>();
+//                parameter.put("id", id);
+//                parameter.put("year", year);
+//                parameter.put("month", month);
+//                parameter.put("day", day);
+//                return parameter;
+//
+//            } else {
+//                System.out.println("========================");
+//                System.out.println("Y와 N중 하나를 입력해주세요.");
+//                System.out.println("========================");
+//            }
+//        } while (true);
+//    }
 
     private static Map<String, String> inputSetBonus() {
         Scanner sc = new Scanner(System.in);

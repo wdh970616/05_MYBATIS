@@ -30,6 +30,19 @@ public class EmpController {
         }
     }
 
+    public void sellectEmpByDeptCode(Map<String, String> parameter) {
+        String deptCode = parameter.get("deptCode");
+
+        List<EmployeeDTO> empList = empService.selectEmpByDeptCode(deptCode);
+        if (empList != null) {
+            System.out.println();
+            empPrintResult.printEmpList(empList);
+            System.out.println();
+        } else {
+            empPrintResult.printErrorMessage("selectEmpByDeptCode");
+        }
+    }
+
     public void sellectEmpByID(Map<String, String> parameter) {
         String id = parameter.get("id");
         EmployeeDTO emp = empService.selectEmpById(id);
