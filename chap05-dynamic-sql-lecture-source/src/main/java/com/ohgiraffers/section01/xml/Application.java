@@ -8,7 +8,7 @@ public class Application {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         do {
-            System.out.println("================ 마이바티스 동적 SQL (조건문) ================");
+            System.out.println("\n================ 마이바티스 동적 SQL (조건문) ================");
             System.out.println("1. if 확인하기");
             System.out.println("2. choode(when, otherwise) 확인하기");
             System.out.println("3. foreach 확인하기");
@@ -18,13 +18,17 @@ public class Application {
             int choice = sc.nextInt();
 
             switch (choice) {
-                case 1 :
+                case 1:
                     ifSubMenu();
                     break;
-                case 2 : break;
-                case 3 : break;
-                case 4 : break;
-                case 9 :
+                case 2:
+                    chooseSubMenu();
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 9:
                     System.out.println("프로그램을 종료합니다.");
                     return;
             }
@@ -42,15 +46,14 @@ public class Application {
             System.out.print("원하시는 메뉴번호를 입력하세요 : ");
             int choice = sc.nextInt();
             switch (choice) {
-                case 1 :
+                case 1:
                     menuService.selectMenuByPrice(inputPrice());
                     break;
-                case 2 :
+                case 2:
                     menuService.searchMenu(inputSearchCriteria());
                     break;
-                case 9 :
-
-                    break;
+                case 9:
+                    return;
             }
         } while (true);
     }
@@ -69,5 +72,32 @@ public class Application {
         System.out.print("검색어를 입력해주세요 : ");
         String value = sc.nextLine();
         return new SearchCriteria(condition, value);
+    }
+
+    private static void chooseSubMenu() {
+        Scanner sc = new Scanner(System.in);
+        MenuService menuService = new MenuService();
+        do {
+            System.out.println("\n============== choose 서브메뉴 ==============");
+            System.out.println("1. 카테고리 상위 분류별 메뉴 보여주기(식사, 음료, 디저트)");
+            System.out.println("9. 이전 메뉴로");
+            System.out.print("원하시는 메뉴번호를 입력하세요 : ");
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    menuService.searchMenuBySubCategory(inputSubCategory());
+                    break;
+                case 9:
+                    return;
+            }
+        } while (true);
+    }
+
+    private static SearchCriteria inputSubCategory() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("상위분류를 입력하세요(식사, 음료, 디저트) : ");
+        String value = sc.nextLine();
+
+        return new SearchCriteria("category", value);
     }
 }
