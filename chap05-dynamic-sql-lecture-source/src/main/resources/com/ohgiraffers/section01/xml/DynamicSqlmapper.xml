@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.section01.xml.DynamicSqlMapper">
+    <resultMap id="menuResultMap" type="com.ohgiraffers.common.MenuDTO">
+        <id property="code" column="menu_code"/>
+        <result property="name" column="menu_name"/>
+        <result property="price" column="menu_price"/>
+        <result property="categoryCode" column="category_code"/>
+        <result property="orderableStatus" column="orderable_status"/>
+    </resultMap>
+
+    <!--
+         다이나믹 쿼리에서 사용하는 비교 연산자
+         xml 파일 특성상 부등호 사용 불가능.
+         gte (greater than or equal to) : >=
+         gt (geater than) : >
+         lte (less than or equal to) : <=
+         lt (less than) : <
+
+         <![CDATA[문장]]> : 문장에 해당하는 공간에서는 부등호에 대한 표현이 자유로움
+         <if> 태그 : test 속성의 조건에 해당할때만 엘리먼트 구문을 쿼리에 포합한다.
+    -->
+    <select id="selectMenuByPrice" parameterType="hashmap" resultMap="menuResultMap">
+        select a.menu_code,
+        a.menu_name,
+        a.menu_price,
+        a.category_code,
+        a.orderable_status
+        from tbl_menu a
+        where a.orderable_status = 'Y'
+        <!-- 0 < price <= 10000 -->
+        <if test="price gt 0 and price lte 10000">
+            <![CDATA[
+            and a.menu_price < #{price}
+            ]]>
+        </if>
+        <!-- 10000 < price <= 20000 -->
+        <if test="price gt 10000 and price lte 20000">
+            and a.menu_price between 10000 and #{price}
+        </if>
+        <!-- 20000 < price <= 30000 -->
+        <if test="price gt 20000 and price lte 30000">
+            and a.menu_price between 20000 and #{price}
+        </if>
+        <!-- 30000 < price -->
+        <if test="price gt 30000">
+            and a.menu_price between 30000 and #{price}
+        </if>
+    </select>
+
+    <select id="searchMenu" parameterType="SearchCriteria" resultMap="menuResultMap">
+        select a.menu_code,
+        a.menu_name,
+        a.menu_price,
+        a.category_code,
+        a.orderable_status
+        from tbl_menu a
+        <if test="condition == 'category'">
+            join tbl_category b using (category_code)
+        </if>
+        where a.orderable_status = 'Y'
+        <if test="condition == 'name'">
+            and a.menu_name like concat('%', #{value}, '%')
+        </if>
+        <if test="condition == 'category'">
+            and b.category_name = #{value}
+        </if>
+        order by a.menu_code
+    </select>
+</mapper>
