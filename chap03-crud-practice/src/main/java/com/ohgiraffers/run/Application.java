@@ -197,51 +197,52 @@ public class Application {
         return parameter;
     }
 
-//    private static Map<String, String> inputRetireEmp() {
-//        Scanner sc = new Scanner(System.in);
-//        System.out.print("퇴사처리 할 사원의 ID를 입력해주세요 : ");
-//        String id = sc.nextLine();
-//        System.out.print("당일 퇴사처리 하시겠습니까? (Y/N) : ");
-//        String isItToday = sc.nextLine();
-//        do {
-//            if (isItToday.equals("Y")) {
-//                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//                String strDate = format.format(Date.from(Instant.now()));
-//                String sarr[] = strDate.split("-");
-//                String year = sarr[0];
-//                String month = sarr[1];
-//                String day = sarr[2];
-//
-//                Map<String, String> parameter = new HashMap<>();
-//                parameter.put("id", id);
-//                parameter.put("year", year);
-//                parameter.put("month", month);
-//                parameter.put("day", day);
-//                return parameter;
-//
-//            } else if (isItToday.equals("N")) {
-//                System.out.println("퇴사날짜 직접 입력을 선택하셨습니다.");
-//                System.out.print("퇴사처리 할 사원의 퇴사연도를 입력해주세요 : ");
-//                String year = sc.nextLine();
-//                System.out.print("퇴사처리 할 사원의 퇴사월을 입력해주세요 : ");
-//                String month = sc.nextLine();
-//                System.out.print("퇴사처리 할 사원의 입사 퇴사일을 입력해주세요 : ");
-//                String day = sc.nextLine();
-//
-//                Map<String, String> parameter = new HashMap<>();
-//                parameter.put("id", id);
-//                parameter.put("year", year);
-//                parameter.put("month", month);
-//                parameter.put("day", day);
-//                return parameter;
-//
-//            } else {
-//                System.out.println("========================");
-//                System.out.println("Y와 N중 하나를 입력해주세요.");
-//                System.out.println("========================");
-//            }
-//        } while (true);
-//    }
+    private static Map<String, String> inputRetireEmp() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("퇴사처리 할 사원의 ID를 입력해주세요 : ");
+        String id = sc.nextLine();
+        System.out.print("당일 퇴사처리 하시겠습니까? (Y/N) : ");
+        String isItToday = sc.nextLine();
+
+            if (isItToday.equals("Y")) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String strDate = format.format(Date.from(Instant.now()));
+                String sarr[] = strDate.split("-");
+                String year = sarr[0];
+                String month = sarr[1];
+                String day = sarr[2];
+
+                Map<String, String> parameter = new HashMap<>();
+                parameter.put("id", id);
+                parameter.put("year", year);
+                parameter.put("month", month);
+                parameter.put("day", day);
+                return parameter;
+
+            } else if (isItToday.equals("N")) {
+                System.out.println("퇴사날짜 직접 입력을 선택하셨습니다.");
+                System.out.print("퇴사처리 할 사원의 퇴사연도를 입력해주세요 : ");
+                String year = sc.nextLine();
+                System.out.print("퇴사처리 할 사원의 퇴사월을 입력해주세요 : ");
+                String month = sc.nextLine();
+                System.out.print("퇴사처리 할 사원의 입사 퇴사일을 입력해주세요 : ");
+                String day = sc.nextLine();
+
+                Map<String, String> parameter = new HashMap<>();
+                parameter.put("id", id);
+                parameter.put("year", year);
+                parameter.put("month", month);
+                parameter.put("day", day);
+                return parameter;
+
+            } else {
+                System.out.println("========================");
+                System.out.println("Y와 N중 하나를 입력해주세요.");
+                System.out.println("========================");
+            }
+    }
+
+
 
     private static Map<String, String> inputSetBonus() {
         Scanner sc = new Scanner(System.in);
