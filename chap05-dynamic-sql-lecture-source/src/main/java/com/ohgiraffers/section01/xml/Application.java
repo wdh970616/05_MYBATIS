@@ -209,9 +209,8 @@ public class Application {
         sc.nextLine();
         String name = sc.nextLine();
         System.out.print("변경할 카테고리 코드를 입력하세요 : ");
-        int categoryCode = sc.nextInt();
+        String strCategoryCode = sc.nextLine();
         System.out.print("판매 여부를 결정해주세요 (Y/N) : ");
-        sc.nextLine();
         String orderableStatus = sc.nextLine();
 
         Map<String, Object> criteria = new HashMap<>();
