@@ -30,7 +30,7 @@ public class MenuService {
                 System.out.println(menu);
             }
         } else {
-            System.out.println("검색 결과가 존재하지 않습니다.");
+            System.out.println("!!! 검색 결과가 존재하지 않습니다 !!!");
         }
         sqlSession.close();
     }
@@ -46,7 +46,7 @@ public class MenuService {
                 System.out.println(menu);
             }
         } else {
-            System.out.println("검색 결과가 존재하지 않습니다.");
+            System.out.println("!!! 검색 결과가 존재하지 않습니다 !!!");
         }
         sqlSession.close();
     }
@@ -62,7 +62,42 @@ public class MenuService {
                 System.out.println(menu);
             }
         } else {
-            System.out.println("검색 결과가 존재하지 않습니다.");
+            System.out.println("!!! 잘못된 입력이거나 검색 결과가 존재하지 않습니다 !!!");
+        }
+        sqlSession.close();
+    }
+
+    public void searchMenuByRandomMenuCode(List<Integer> randomMenuCodeList) {
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(DynamicSqlMapper.class);
+
+        Map<String, List<Integer>> criteria = new HashMap<>();
+        criteria.put("randomMenuCodeList", randomMenuCodeList);
+        List<MenuDTO> menuList = mapper.searchMenuByRandomCodeList(criteria);
+
+        System.out.println();
+        if (menuList != null && menuList.size() > 0) {
+            for (MenuDTO menu : menuList) {
+                System.out.println(menu);
+            }
+        } else {
+            System.out.println("!!! 잘못된 입력이거나 검색 결과가 존재하지 않습니다 !!!");
+        }
+        sqlSession.close();
+    }
+
+    public void searchMenuByCodeOrSearchAll(SearchCriteria searchCriteria) {
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(DynamicSqlMapper.class);
+        List<MenuDTO> menuList = mapper.searchMenuByCodeAllSearchAll(searchCriteria);
+
+        System.out.println();
+        if (menuList != null && menuList.size() > 0) {
+            for (MenuDTO menu : menuList) {
+                System.out.println(menu);
+            }
+        } else {
+            System.out.println("!!! 잘못된 입력이거나 검색 결과가 존재하지 않습니다 !!!");
         }
         sqlSession.close();
     }
