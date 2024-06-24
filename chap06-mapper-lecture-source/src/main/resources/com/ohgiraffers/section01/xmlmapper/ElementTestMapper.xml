@@ -124,4 +124,36 @@
         join tbl_category b using (category_code)
         where a.orderable_status = 'Y'
     </select>
+
+    <!-- <collection>
+    a. 따로 만든 resultMap을 사용하는 방법 -->
+    <resultMap id="categoryAndMenuResultMap" type="com.ohgiraffers.common.CategoryAndMenuDTO">
+        <id property="code" column="category_code"/>
+        <id property="name" column="category_name"/>
+        <id property="refCategoryCode" column="ref_category_code"/>
+        <collection property="menuList" resultMap="menuResultMap"/>
+    </resultMap>
+
+    <resultMap id="menuResultMap" type="com.ohgiraffers.common.MenuDTO">
+        <id property="code" column="menu_code"/>
+        <result property="name" column="menu_name"/>
+        <result property="price" column="menu_price"/>
+        <result property="categoryCode" column="category_code"/>
+        <result property="orderableStatus" column="orderable_status"/>
+    </resultMap>
+
+    <select id="selectResultMapCollectionTest" resultMap="categoryAndMenuResultMap">
+        select a.category_code,
+        a.category_name,
+        a.ref_category_code,
+        b.menu_code,
+        b.menu_name,
+        b.menu_price,
+        b.category_code,
+        b.orderable_status
+        from tbl_category a
+        left join tbl_menu b using (category_code)
+        where b.orderable_status = 'Y'
+        order by a.category_code
+    </select>
 </mapper>

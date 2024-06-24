@@ -58,6 +58,7 @@ public class Application {
                     elementTestService.selectResultMapAssociationTest();
                     break;
                 case 4:
+                    elementTestService.selectResultMapCollectionTest();
                     break;
                 case 0:
                     return;
