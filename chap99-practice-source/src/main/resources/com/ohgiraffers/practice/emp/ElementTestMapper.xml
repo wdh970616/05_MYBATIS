@@ -27,8 +27,7 @@
     </resultMap>
 
     <select id="selectEmpById" resultMap="empAndDeptResultMap">
-        select a.*,
-        b.*
+        select *
         from employee a
         join department b on (a.dept_code = b.dept_id)
         where emp_id = #{id}
@@ -57,8 +56,7 @@
     </resultMap>
 
     <select id="selectDept" resultMap="deptAndEmpResultMap">
-        select a.*,
-        b.*
+        select *
         from department a
         left join employee b on (a.dept_id = b.dept_code)
         order by a.dept_id

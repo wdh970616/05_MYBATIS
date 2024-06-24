@@ -2,7 +2,7 @@ package com.ohgiraffers.DTO;
 
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class EmployeeDTO {
     private double salary;
     private double bonus;
     private String managerId;
-    private Date hireDate;
-    private Date entDate;
+    private LocalDate hireDate;
+    private LocalDate entDate;
     private String entYn;
 }

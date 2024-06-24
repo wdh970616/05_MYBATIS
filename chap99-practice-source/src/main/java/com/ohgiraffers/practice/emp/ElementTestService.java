@@ -33,10 +33,10 @@ public class ElementTestService {
 
         System.out.print("조회하실 부서ID의 번호를 입력하세요 : D");
         Scanner sc = new Scanner(System.in);
-        int index = sc.nextInt();
+        int index = sc.nextInt() - 1;
 
         List<DeptAndEmpDTO> deptList = empMapper.selectDept();
-        List<EmployeeDTO> empList = deptList.get((index - 1)).getEmpList();
+        List<EmployeeDTO> empList = deptList.get(index).getEmpList();
 
         System.out.println();
         if (empList.size() > 0) {
