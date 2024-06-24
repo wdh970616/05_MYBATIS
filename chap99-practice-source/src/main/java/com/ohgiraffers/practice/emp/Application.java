@@ -34,6 +34,7 @@ public class Application {
                     System.out.println("\n!!! 잘못 입력하셨습니다 !!!");
                     break;
                 case 0:
+                    System.err.println("\n***** 프로그램을 종료합니다 *****");
                     return;
             }
         } while (true);
