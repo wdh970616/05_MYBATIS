@@ -4,27 +4,124 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ohgiraffers.section01.xmlmapper.ElementTestMapper">
 
-<!-- Mapper xml에서 사용할 수 있는 엘리먼트 9가지
-     <cache>, <cache-ref>, <resultMap>, <parameterMap>, <sql>,
-     <select>, <insert>, <update>, <delete> -->
+    <!-- Mapper xml에서 사용할 수 있는 엘리먼트 9가지
+         <cache>, <cache-ref>, <resultMap>, <parameterMap>, <sql>,
+         <select>, <insert>, <update>, <delete> -->
 
-<!-- <cache>와 <cache-ref>
-     - cache는 현재 네임스페이스에 대한 캐시 설정
-     - cache-ref는 다른 네임스페이스에 대한 캐시 설정 참조를 할 때 사용
+    <!-- <cache>와 <cache-ref>
+         - cache는 현재 네임스페이스에 대한 캐시 설정
+         - cache-ref는 다른 네임스페이스에 대한 캐시 설정 참조를 할 때 사용
 
-     캐시란?
-     - 컴퓨터 과학에서 데이터나 값을 미리 복사해둔 임시 저장소를 의미한다.
-     - 캐시 접근시간에 비해 원래 데이터에 접근하는 시간이 오래 걸리는 경우나, 값을 다시 계산하는 경우 시간을 절약하고 싶을때 사용한다.
-     - 캐시에 데이터를 미리 복사해두면 계산이나 접근시간없이 더 빠른 속도로 데이터에 접근 가능하다.
+         캐시란?
+         - 컴퓨터 과학에서 데이터나 값을 미리 복사해둔 임시 저장소를 의미한다.
+         - 캐시 접근시간에 비해 원래 데이터에 접근하는 시간이 오래 걸리는 경우나, 값을 다시 계산하는 경우 시간을 절약하고 싶을때 사용한다.
+         - 캐시에 데이터를 미리 복사해두면 계산이나 접근시간없이 더 빠른 속도로 데이터에 접근 가능하다.
 
-     <사용 가능 속성>
-     1. eviction : 캐시 알고리즘 속성, 디폴트는 LRU, SOFT, WEAK로 설정 가능
-     2. flushInterval : 설정된 캐시를 얼마동안 유지할지 밀리초 단위 및 양수로만 설정 가능
-     3. size : 캐시에 저장할 객체의 수를 지정, 디폴트는 1024
-     4. readonly : 읽기만 가능한 경우 캐시 데이터는 변경되지 않는다. -->
+         <사용 가능 속성>
+         1. eviction : 캐시 알고리즘 속성, 디폴트는 LRU, SOFT, WEAK로 설정 가능
+         2. flushInterval : 설정된 캐시를 얼마동안 유지할지 밀리초 단위 및 양수로만 설정 가능
+         3. size : 캐시에 저장할 객체의 수를 지정, 디폴트는 1024
+         4. readonly : 읽기만 가능한 경우 캐시 데이터는 변경되지 않는다. -->
     <cache eviction="LRU" flushInterval="1000" size="512" readOnly="true"/>
     <select id="selectCacheTest" resultType="java.lang.String">
         select menu_name
         from tbl_menu
+    </select>
+
+    <!-- <ResultMap>
+         1. DB에서 조회한 결과 데이터를 객체에 로드하는 방법을 정의하는 엘리먼트
+         2. resultMap은 MyBatis에서 가장 중요하고 강력한 엘리먼트
+         3. (jdbc) ResultSet에서 데이터를 가져올때 작성되는 JDBC코드를 줄여주는 역할
+
+         <result 엘리먼트 속성>
+         1. id : 매핑 구문에서 결과 매핑을 사용할 때 구분하기 위한 ID
+         2. type : 결과 매핑을 적용하는 대상의 객체 타입(= 결과를 저장할 JAVA타입을 의미)
+         3. extends : 자바의 상속처럼 기존에 정의된 매핑 결과를 상속받아 추가적인 매핑 정보로 확장할때 사용 (부모 resultMap ID를 사용)
+         4. autoMapping : 결과 매핑을 자동으로 할 것인지를 결정(동일한 컬럼명이 있을 경우 위험성을 가지기 때문에 사용을 권장하지않음) -->
+    <resultMap id="menuResultMap1" type="com.ohgiraffers.common.MenuDTO" autoMapping="false">
+        <id property="code" column="menu_code"/>
+        <result property="name" column="menu_name"/>
+        <result property="price" column="menu_price"/>
+        <result property="categoryCode" column="category_code"/>
+    </resultMap>
+    <!-- <select id="selectResultMapTest" resultMap="menuResultMap1">
+             select menu_code,
+             menu_name,
+             menu_price,
+             category_code,
+             orderable_status
+             from tbl_menu
+             where orderable_status = 'Y'
+         </select> -->
+
+    <resultMap id="menuResultMap2" type="com.ohgiraffers.common.MenuDTO" extends="menuResultMap1">
+        <!-- extends로 menuResultMap1을 확장했으므로 추가하고 싶은것만 작성해주면 된다. -->
+        <result property="orderableStatus" column="orderable_status"/>
+    </resultMap>
+    <select id="selectResultMapTest" resultMap="menuResultMap2">
+        select menu_code,
+        menu_name,
+        menu_price,
+        category_code,
+        orderable_status
+        from tbl_menu
+        where orderable_status = 'Y'
+    </select>
+
+    <!-- <ResultMap>의 하위 엘리먼트
+         <id> : primary key 컬럼을 매핑하기 위한 태그 (성능 향상)
+         <result> : pk가 아닌 일반 컬럼에 매핑하기 위한 태그
+         <constructor> : 인스턴스화 되는 클래스의 ㅅ갱성자에 결과를 삽입하기 위해 사용 <idArg>, <arg>
+         <association> : 복잡한 타입의 연관관계로 1:1 포함관계인 경우 사용한다.
+         <collection> :복잡한 타입의 연관관계로 1:N 포함관계인 경우 사용한다. -->
+
+    <!-- <constructor>-->
+    <resultMap id="menuResultMap3" type="com.ohgiraffers.common.MenuDTO">
+        <constructor>
+            <idArg column="menu_code" javaType="_int"/>
+            <arg column="menu_name" javaType="string"/>
+            <arg column="menu_price" javaType="_int"/>
+            <arg column="category_code" javaType="_int"/>
+            <arg column="orderable_status" javaType="string"/>
+        </constructor>
+    </resultMap>
+
+    <select id="selectResultMapConstructorTest" resultMap="menuResultMap3">
+        select menu_code,
+        menu_name,
+        menu_price,
+        category_code,
+        orderable_status
+        from tbl_menu
+        where orderable_status = 'Y'
+    </select>
+
+    <!-- <association>
+    a. 따로 만든 resultMap을 사용하는 방법 -->
+    <resultMap id="menuAndCategoryResultMap" type="com.ohgiraffers.common.MenuAndCategoryDTO">
+        <id property="code" column="menu_code"/>
+        <result property="name" column="menu_name"/>
+        <result property="price" column="menu_price"/>
+        <result property="orderableStatus" column="orderable_status"/>
+        <association property="category" resultMap="categoryResultMap"/>
+    </resultMap>
+
+    <resultMap id="categoryResultMap" type="com.ohgiraffers.common.CategoryDTO">
+        <id property="code" column="category_code"/>
+        <result property="name" column="category_name"/>
+        <result property="refCategoryCode" column="ref_category_code"/>
+    </resultMap>
+
+    <select id="selectResultMapAssociationTest" resultMap="menuAndCategoryResultMap">
+        select a.menu_code,
+        a.menu_name,
+        a.menu_price,
+        b.category_code,
+        b.category_name,
+        b.ref_category_code,
+        a.orderable_status
+        from tbl_menu a
+        join tbl_category b using (category_code)
+        where a.orderable_status = 'Y'
     </select>
 </mapper>

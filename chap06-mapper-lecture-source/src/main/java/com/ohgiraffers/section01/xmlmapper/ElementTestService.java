@@ -1,5 +1,7 @@
 package com.ohgiraffers.section01.xmlmapper;
 
+import com.ohgiraffers.common.MenuAndCategoryDTO;
+import com.ohgiraffers.common.MenuDTO;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -27,6 +29,42 @@ public class ElementTestService {
             // 총 소요시간 출력
             long interval = endTime - startTime;
             System.out.println("수행시간 :  " + interval + "(ms)");
+        }
+        sqlSession.close();
+    }
+
+    public void selectResultMapTest() {
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(ElementTestMapper.class);
+
+        System.out.println();
+        List<MenuDTO> menuList = mapper.selectResultMapTest();
+        for (MenuDTO menu : menuList) {
+            System.out.println(menu);
+        }
+        sqlSession.close();
+    }
+
+    public void selectResultMapConstructorTest() {
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(ElementTestMapper.class);
+
+        System.out.println();
+        List<MenuDTO> menuList = mapper.selectResultMapConstructorTest();
+        for (MenuDTO menu : menuList) {
+            System.out.println(menu);
+        }
+        sqlSession.close();
+    }
+
+    public void selectResultMapAssociationTest() {
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(ElementTestMapper.class);
+
+        System.out.println();
+        List<MenuAndCategoryDTO> menuList = mapper.selectResultMapAssociationTest();
+        for (MenuAndCategoryDTO menu : menuList) {
+            System.out.println(menu);
         }
         sqlSession.close();
     }
