@@ -1,6 +1,7 @@
 package com.ohgiraffers.section01.xml;
 
 import com.ohgiraffers.common.SearchCriteria;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.*;
 
@@ -210,6 +211,7 @@ public class Application {
         String name = sc.nextLine();
         System.out.print("변경할 카테고리 코드를 입력하세요 : ");
         String strCategoryCode = sc.nextLine();
+        Integer categoryCode = NumberUtils.toInt(strCategoryCode);
         System.out.print("판매 여부를 결정해주세요 (Y/N) : ");
         String orderableStatus = sc.nextLine();
 
