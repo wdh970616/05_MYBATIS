@@ -38,8 +38,8 @@ public class ElementTestService {
         SqlSession sqlSession = getSqlSession();
         mapper = sqlSession.getMapper(ElementTestMapper.class);
 
-        System.out.println();
         List<MenuDTO> menuList = mapper.selectResultMapTest();
+        System.out.println();
         for (MenuDTO menu : menuList) {
             System.out.println(menu);
         }
@@ -50,8 +50,8 @@ public class ElementTestService {
         SqlSession sqlSession = getSqlSession();
         mapper = sqlSession.getMapper(ElementTestMapper.class);
 
-        System.out.println();
         List<MenuDTO> menuList = mapper.selectResultMapConstructorTest();
+        System.out.println();
         for (MenuDTO menu : menuList) {
             System.out.println(menu);
         }
@@ -62,8 +62,8 @@ public class ElementTestService {
         SqlSession sqlSession = getSqlSession();
         mapper = sqlSession.getMapper(ElementTestMapper.class);
 
-        System.out.println();
         List<MenuAndCategoryDTO> menuList = mapper.selectResultMapAssociationTest();
+        System.out.println();
         for (MenuAndCategoryDTO menu : menuList) {
             System.out.println(menu);
         }
@@ -74,10 +74,17 @@ public class ElementTestService {
         SqlSession sqlSession = getSqlSession();
         mapper = sqlSession.getMapper(ElementTestMapper.class);
 
-        System.out.println();
         List<CategoryAndMenuDTO> categoryList = mapper.selectResultMapCollectionTest();
+        List<MenuDTO> menuList = categoryList.get(4).getMenuList();
+
+        System.out.println();
         for (CategoryAndMenuDTO category : categoryList) {
             System.out.println(category);
+        }
+
+        System.out.println();
+        for (MenuDTO menu : menuList) {
+            System.out.println(menu);
         }
         sqlSession.close();
     }
