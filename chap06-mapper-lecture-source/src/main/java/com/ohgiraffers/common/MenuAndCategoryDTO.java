@@ -11,7 +11,6 @@ public class MenuAndCategoryDTO {
     private int code;
     private String name;
     private int price;
-    private int categoryCode;
     private String orderableStatus;
     private CategoryDTO category;
 }

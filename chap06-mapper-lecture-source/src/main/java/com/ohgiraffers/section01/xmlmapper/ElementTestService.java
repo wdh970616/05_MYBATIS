@@ -88,4 +88,55 @@ public class ElementTestService {
         }
         sqlSession.close();
     }
+
+    public void selectSqlTest() {
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(ElementTestMapper.class);
+
+        List<MenuDTO> menuList = mapper.selectSqlTest();
+
+        System.out.println();
+        for (MenuDTO menu : menuList) {
+            System.out.println(menu);
+        }
+        sqlSession.close();
+    }
+
+    public void insertMenuTest(MenuDTO menu) {
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(ElementTestMapper.class);
+
+        int result = mapper.insertMenuTest(menu);
+
+        System.out.println();
+        if (result > 0) {
+            System.out.println("메뉴 등록을 성공하였습니다!");
+            sqlSession.commit();
+        } else {
+            System.out.println("!!! 메뉴 등록을 실패하였습니다 !!!");
+            sqlSession.rollback();
+        }
+        sqlSession.close();
+    }
+
+    public void insertCategoryAndMenuTest(MenuAndCategoryDTO menuAndCategory) {
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(ElementTestMapper.class);
+
+        // 1. 신규 카테고리 등록
+        // 2. 신규 카테고리를 가지고 있는 메뉴를 등록
+
+        int result = mapper.insertNewCategory(menuAndCategory);
+        int result2 = mapper.insertNewMenu(menuAndCategory);
+
+        System.out.println();
+        if (result > 0 && result2 > 0) {
+            System.out.println("카테고리와 메뉴 등록을 성공하였습니다!");
+            sqlSession.commit();
+        } else {
+            System.out.println("!!! 카테고리와 메뉴 등록을 실패하였습니다 !!!");
+            sqlSession.rollback();
+        }
+        sqlSession.close();
+    }
 }
